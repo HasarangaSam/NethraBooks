@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1716818757 source:c:\users\hasaranga\desktop\github\nethrabookshop\main.cpp
+	<iostream>
+	<iomanip>
+	<fstream>
+	<windows.h>
+	<thread>
+	<chrono>
+	<ctime>
+	<cctype>
+
