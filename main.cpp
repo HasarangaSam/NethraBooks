@@ -947,38 +947,11 @@ void completePendingOrder(Order orders[], int& orderSize, Book books[], int& siz
             --orderSize;
 
             // Write updated books and orders to files
-
             // Update books file
-            ofstream booksFile("books.txt");
-            if (booksFile.is_open()) {
-                for (int i = 0; i < size; ++i) {
-                    booksFile << books[i].isbn << endl;
-                    booksFile << books[i].name << endl;
-                    booksFile << books[i].author << endl;
-                    booksFile << books[i].price << endl;
-                    booksFile << books[i].quantity << endl;
-                }
-                booksFile.close();
-            } else {
-                cout << "Error: Unable to update books file." << endl;
-                // Handle error appropriately
-            }
+            saveBooks(books,size);
 
             // Update orders file
-            ofstream ordersFile("orders.txt");
-            if (ordersFile.is_open()) {
-                for (int i = 0; i < orderSize; ++i) {
-                    ordersFile << orders[i].date << endl;
-                    ordersFile << orders[i].customer << endl;
-                    ordersFile << orders[i].orderBook << endl;
-                    ordersFile << orders[i].authorBook << endl;
-                    ordersFile << orders[i].orderQuantity << endl;
-                    ordersFile << orders[i].orderTotal << endl;
-                }
-                ordersFile.close();
-            } else {
-                cout << "Error: Unable to update orders file." << endl;
-            }
+            saveOrders(orders,orderSize);           
 
             // Display success message
             cout << endl;
