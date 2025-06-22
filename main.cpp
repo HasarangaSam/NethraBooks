@@ -55,21 +55,21 @@ void manageOrders();       //manage orders
 void backManageBooks();    //back to manage books menu
 void backManageOrders();   //back to manage orders menu
 void tryAgain();           //prompt the user to try again
-void loadBooks(Book books[], int& size, const int maxSize);
-void saveBooks(const Book books[], int size);
-void loadOrders(Order orders[], int& orderSize, const int maxOrders);
-void saveOrders(const Order orders[], int orderSize);
-void showBooks(const Book books[], int size,int maxSize);   //show book list
-void addBook(Book books[], int& size,int maxSize);         //add book
-void searchBook(const Book books[],int size);       //search book
-void updateBook(Book books[], int size);
-void deleteBook(Book books[], int& size);      //delete book
+void loadBooks();
+void saveBooks();
+void loadOrders();
+void saveOrders();
+void showBooks();   //show book list
+void addBook();         //add book
+void searchBook();       //search book
+void updateBook();
+void deleteBook();      //delete book
 void prepareQuotation();                       //prepare quotation
 void setColor(int color);         //set text colors
-void displayBookList(const Book books[], int size);  //show current book list before deleting
-void showPendingOrders (const Order orders[], int orderSize, int maxOrders );   //show pending orders
-void addOrder(Order orders[], int& orderSize, Book books[], int size);  //add order
-void completePendingOrder(Order orders[], int& orderSize, Book books[], int& size);  //complete pending order
+void displayBookList();  //show current book list before deleting
+void showPendingOrders ();   //show pending orders
+void addOrder();  //add order
+void completePendingOrder();  //complete pending order
 string getCurrentDate();   //get current data in YY-MM-DD format
 bool compareIgnoreCase(const string& str1, const string& str2); // Function to compare two strings ignoring case
 void about();  //show about
@@ -94,8 +94,8 @@ int main()
 {
     displayNethraBookShopASCIIArt();
     displayTopic();
-    loadBooks(books, size, maxSize);  // Load books from file
-    loadOrders(orders, orderSize, maxOrders);  // Load orders from file
+    loadBooks();  // Load books from file
+    loadOrders();  // Load orders from file
     login();
 
 
@@ -280,26 +280,26 @@ void manageBooks()
     switch(b)
     {
         case 1:
-             showBooks(books, size, maxSize);
+             showBooks();
             break;
 
 
         case 2:
-            searchBook(books,size);
+            searchBook();
             break;
 
         case 3:
 
-             addBook(books,size,maxSize);
+             addBook();
              break;
 
          case 4:
 
-             updateBook(books,size);
+             updateBook();
              break;
 
         case 5:
-             deleteBook(books,size);
+             deleteBook();
              break;
 
         case 6:
@@ -340,14 +340,14 @@ void manageOrders()
     {
 
     case 1:
-           showPendingOrders (orders, orderSize, maxOrders);
+           showPendingOrders ();
            break;
     case 2:
-           addOrder(orders, orderSize,books,size);
+           addOrder();
            break;
 
     case 3:
-        completePendingOrder(orders, orderSize, books, size);
+        completePendingOrder();
         break;
 
     case 4:
@@ -446,7 +446,7 @@ void tryAgain()
  }
 }
 
-void loadBooks(Book books[], int& size, const int maxSize) {
+void loadBooks() {
     ifstream inFile("books.txt");
     if (inFile.is_open()) {
         while (size < maxSize && inFile >> books[size].isbn) {
@@ -462,7 +462,7 @@ void loadBooks(Book books[], int& size, const int maxSize) {
     }
 }
 
-void saveBooks(const Book books[], int size) {
+void saveBooks() {
     ofstream outFile("books.txt");
     if (outFile.is_open()) {
         for (int i = 0; i < size; ++i) {
@@ -478,7 +478,7 @@ void saveBooks(const Book books[], int size) {
     }
 }
 
-void loadOrders(Order orders[], int& orderSize, const int maxOrders) {
+void loadOrders() {
     ifstream inFile("orders.txt");
     if (inFile.is_open()) {
         while (orderSize < maxOrders && getline(inFile, orders[orderSize].date)) {
@@ -495,7 +495,7 @@ void loadOrders(Order orders[], int& orderSize, const int maxOrders) {
     }
 }
 
-void saveOrders(const Order orders[], int orderSize) {
+void saveOrders() {
     ofstream outFile("orders.txt");
     if (outFile.is_open()) {
         for (int i = 0; i < orderSize; ++i) {
@@ -512,7 +512,7 @@ void saveOrders(const Order orders[], int orderSize) {
     }
 }
 
-void showBooks(const Book books[], int size, int maxSize)
+void showBooks()
 {
     clearConsole();
             cout<<"**Book List**"<<endl;
@@ -540,7 +540,7 @@ void showBooks(const Book books[], int size, int maxSize)
                 backManageBooks();
 }
 
-void searchBook(const Book books[], int size) {
+void searchBook() {
     clearConsole();
     cout << "**Search Book**" << endl;
     cout << endl;
@@ -578,7 +578,7 @@ void searchBook(const Book books[], int size) {
 }
 
 
-void addBook(Book books[], int& size, int maxSize) {
+void addBook() {
     if (size < maxSize) {
         clearConsole();
         cout << "**Add Book**" << endl;
@@ -617,7 +617,7 @@ void addBook(Book books[], int& size, int maxSize) {
             cout << "Successfully added '" << books[size].name << "' to the book list." << endl;
             ++size;  //increment size of the book array because of the newly added book
         }
-        saveBooks(books, size);  // Save changes to file
+        saveBooks();  // Save changes to file
         addAnotherBook();
     } else {
         clearConsole();
@@ -626,12 +626,12 @@ void addBook(Book books[], int& size, int maxSize) {
     }
 }
 
-void updateBook(Book books[], int size) {
+void updateBook() {
     clearConsole();
     cout << "**Update Book**" << endl;
     cout << endl;
 
-    displayBookList(books, size);
+    displayBookList();
 
     int updateISBN;
     cout << "Enter the ISBN of the book to update: ";
@@ -694,10 +694,10 @@ void updateBook(Book books[], int size) {
 }
 
 
-void deleteBook(Book books[], int& size) {
+void deleteBook() {
     clearConsole();
 
-    displayBookList(books, size);
+    displayBookList();
 
     // Prompt user for the ISBN of the book to be deleted
     int deleteISBN;
@@ -752,7 +752,7 @@ void deleteBook(Book books[], int& size) {
     deleteAnotherBook();
 }
 
-void showPendingOrders (const Order orders[], int orderSize, int maxOrders )
+void showPendingOrders ()
 {
      clearConsole();
         //display the pending orders header
@@ -778,7 +778,7 @@ void showPendingOrders (const Order orders[], int orderSize, int maxOrders )
 
 }
 
-void addOrder(Order orders[], int& orderSize, Book books[], int size) {
+void addOrder() {
     if (orderSize < maxOrders) {
         clearConsole();
 
@@ -895,7 +895,7 @@ void addOrder(Order orders[], int& orderSize, Book books[], int size) {
    }
 }
 
-void completePendingOrder(Order orders[], int& orderSize, Book books[], int& size) {
+void completePendingOrder() {
     clearConsole();
 
     // Check if there are no pending orders
@@ -947,11 +947,12 @@ void completePendingOrder(Order orders[], int& orderSize, Book books[], int& siz
             --orderSize;
 
             // Write updated books and orders to files
+
             // Update books file
-            saveBooks(books,size);
+            saveBooks();
 
             // Update orders file
-            saveOrders(orders,orderSize);           
+            saveOrders();
 
             // Display success message
             cout << endl;
@@ -1125,7 +1126,7 @@ void setColor(int color) {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
 
-void displayBookList(const Book books[], int size) {
+void displayBookList() {
     // Display the current book list
     cout << "** Book List **" << endl;
     cout << endl;
@@ -1232,7 +1233,7 @@ void addAnotherBook()
     switch(g)
     {
     case 3 :
-        addBook(books, size, maxSize);
+        addBook();
         break;
 
     case 5:
@@ -1257,7 +1258,7 @@ void addAnotherOrder()
     switch(f)
     {
     case 3 :
-        addOrder(orders, orderSize,books,size);
+        addOrder();
         break;
 
     case 5:
@@ -1281,7 +1282,7 @@ void completeAnotherOrder()
     switch(h)
     {
     case 3 :
-        completePendingOrder(orders, orderSize, books, size);
+        completePendingOrder();
         break;
 
     case 5:
@@ -1306,7 +1307,7 @@ void searchAnotherBook()
     switch(k)
     {
     case 3 :
-        searchBook(books,size);
+        searchBook();
         break;
 
     case 5:
@@ -1330,7 +1331,7 @@ void deleteAnotherBook()
     switch(l)
     {
     case 3 :
-        deleteBook(books, size);
+        deleteBook();
         break;
 
     case 5:
